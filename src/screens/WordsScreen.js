@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,63 +6,92 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { words } from '../data/wordsData';
 
-const isWeb = Platform.OS === 'web';
-
 const WordsScreen = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const isWeb = Platform.OS === 'web';
+
+  // Get unique categories
+  const categories = ['All', ...Array.from(new Set(words.map(word => word.category)))];
+
+  // Filter words by selected category
+  const filteredWords = selectedCategory === 'All' 
+    ? words 
+    : words.filter(word => word.category === selectedCategory);
+
   return (
-    <ScrollView style={[styles.container, isWeb && styles.webContainer]}>
+    <ScrollView style={styles.container}>
+      {/* Header */}
       <View style={[styles.header, isWeb && styles.webHeader]}>
-        <Text style={[styles.title, isWeb && styles.webTitle]}>શબ્દો</Text>
-        <Text style={[styles.englishTitle, isWeb && styles.webEnglishTitle]}>Words</Text>
-        <Text style={[styles.subtitle, isWeb && styles.webSubtitle]}>ગુજરાતી શબ્દો શીખો</Text>
-        <Text style={[styles.englishSubtitle, isWeb && styles.webEnglishSubtitle]}>Learn Gujarati Words</Text>
+        <Text style={[styles.headerTitle, isWeb && styles.webHeaderTitle]}>
+          Gujarati Words
+        </Text>
+        <Text style={[styles.headerSubtitle, isWeb && styles.webHeaderSubtitle]}>
+          Learn Gujarati vocabulary organized by categories
+        </Text>
       </View>
 
-      <View style={[styles.content, isWeb && styles.webContent]}>
-        <View style={[styles.infoBox, isWeb && styles.webInfoBox]}>
-          <Ionicons name="information-circle" size={isWeb ? 20 : 24} color="#4ECDC4" />
-          <Text style={[styles.infoText, isWeb && styles.webInfoText]}>
-            ગુજરાતી શબ્દો અને તેમના અર્થ.
-          </Text>
-        </View>
-
-        <View style={[styles.wordsContainer, isWeb && styles.webWordsContainer]}>
-          {isWeb && <View style={styles.webWordsGrid}>
-            {words.map((word, index) => (
-              <View
-                key={index}
-                style={[styles.wordCard, isWeb && styles.webWordCard]}
-              >
-                <View style={styles.wordContent}>
-                  <Text style={[styles.wordText, isWeb && styles.webWordText]}>{word.word}</Text>
-                  <Text style={[styles.wordPronunciation, isWeb && styles.webWordPronunciation]}>{word.pronunciation}</Text>
-                  <Text style={[styles.wordEnglish, isWeb && styles.webWordEnglish]}>{word.english}</Text>
-                  <View style={[styles.categoryTag, isWeb && styles.webCategoryTag]}>
-                    <Text style={[styles.categoryTagText, isWeb && styles.webCategoryTagText]}>{word.category}</Text>
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>}
-          {!isWeb && words.map((word, index) => (
+      {/* Category Tabs */}
+      <View style={[styles.tabsContainer, isWeb && styles.webTabsContainer]}>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabsScrollView}
+        >
+          {categories.map((category) => (
             <View
-              key={index}
-              style={styles.wordCard}
+              key={category}
+              style={[
+                styles.tab,
+                isWeb && styles.webTab,
+                selectedCategory === category && styles.activeTab,
+                selectedCategory === category && isWeb && styles.webActiveTab
+              ]}
             >
-              <View style={styles.wordContent}>
-                <Text style={styles.wordText}>{word.word}</Text>
-                <Text style={styles.wordPronunciation}>{word.pronunciation}</Text>
-                <Text style={styles.wordEnglish}>{word.english}</Text>
-                <View style={styles.categoryTag}>
-                  <Text style={styles.categoryTagText}>{word.category}</Text>
-                </View>
-              </View>
+              <Text
+                style={[
+                  styles.tabText,
+                  isWeb && styles.webTabText,
+                  selectedCategory === category && styles.activeTabText,
+                  selectedCategory === category && isWeb && styles.webActiveTabText
+                ]}
+                onPress={() => setSelectedCategory(category)}
+              >
+                {category}
+              </Text>
             </View>
           ))}
-        </View>
+        </ScrollView>
+      </View>
+
+      {/* Category Info */}
+      <View style={[styles.infoContainer, isWeb && styles.webInfoContainer]}>
+        <Text style={[styles.infoText, isWeb && styles.webInfoText]}>
+          {selectedCategory === 'All' 
+            ? `Showing all ${words.length} words` 
+            : `Showing ${filteredWords.length} words in ${selectedCategory}`
+          }
+        </Text>
+      </View>
+
+      {/* Words Grid */}
+      <View style={[styles.wordsContainer, isWeb && styles.webWordsContainer]}>
+        {filteredWords.map((word, index) => (
+          <View
+            key={index}
+            style={[styles.wordCard, isWeb && styles.webWordCard]}
+          >
+            <View style={styles.wordContent}>
+              <Text style={[styles.wordText, isWeb && styles.webWordText]}>{word.word}</Text>
+              <Text style={[styles.wordPronunciation, isWeb && styles.webWordPronunciation]}>{word.pronunciation}</Text>
+              <Text style={[styles.wordEnglish, isWeb && styles.webWordEnglish]}>{word.english}</Text>
+              <View style={[styles.categoryTag, isWeb && styles.webCategoryTag]}>
+                <Text style={[styles.categoryTagText, isWeb && styles.webCategoryTagText]}>{word.category}</Text>
+              </View>
+            </View>
+          </View>
+        ))}
       </View>
     </ScrollView>
   );
@@ -71,121 +100,144 @@ const WordsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  webContainer: {
     backgroundColor: '#f5f5f5',
   },
   header: {
-    backgroundColor: '#FFEAA7',
-    padding: 30,
+    backgroundColor: '#2196F3',
+    padding: 20,
     alignItems: 'center',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
   },
   webHeader: {
-    backgroundColor: '#2c3e50',
-    padding: 40,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    backgroundColor: '#1e3a8a',
+    paddingVertical: 30,
+    paddingHorizontal: 40,
   },
-  title: {
-    fontSize: 28,
+  headerTitle: {
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#D63031',
+    color: 'white',
     marginBottom: 5,
   },
-  webTitle: {
-    fontSize: 36,
-    color: '#ecf0f1',
+  webHeaderTitle: {
+    fontSize: 32,
+    marginBottom: 8,
   },
-  englishTitle: {
-    fontSize: 16,
-    color: '#D63031',
-    marginBottom: 15,
-  },
-  webEnglishTitle: {
-    fontSize: 20,
-    color: '#bdc3c7',
-  },
-  subtitle: {
+  headerSubtitle: {
     fontSize: 14,
-    color: '#D63031',
+    color: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
-    marginBottom: 5,
   },
-  webSubtitle: {
+  webHeaderSubtitle: {
     fontSize: 16,
-    color: '#ecf0f1',
   },
-  englishSubtitle: {
-    fontSize: 12,
-    color: '#D63031',
-    textAlign: 'center',
-    opacity: 0.9,
+  tabsContainer: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
-  webEnglishSubtitle: {
-    fontSize: 14,
-    color: '#bdc3c7',
+  webTabsContainer: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottom: '1px solid #e5e7eb',
   },
-  content: {
-    padding: 20,
+  tabsScrollView: {
+    paddingHorizontal: 15,
   },
-  webContent: {
-    padding: 40,
-    maxWidth: 1200,
-    alignSelf: 'center',
-    width: '100%',
+  tab: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginRight: 8,
+    borderRadius: 20,
+    backgroundColor: '#f3f4f6',
   },
-  infoBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e0f2f7',
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 20,
-    alignSelf: 'center',
-    width: '90%',
-  },
-  webInfoBox: {
-    backgroundColor: '#34495e',
-    padding: 20,
+  webTab: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginRight: 12,
     borderRadius: 25,
-    marginBottom: 30,
-    width: '60%',
-    alignSelf: 'center',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
   },
-  infoText: {
-    fontSize: 16,
-    color: '#34495e',
-    marginLeft: 10,
+  activeTab: {
+    backgroundColor: '#2196F3',
+  },
+  webActiveTab: {
+    backgroundColor: '#1e3a8a',
+    boxShadow: '0 2px 4px rgba(30, 58, 138, 0.2)',
+  },
+  tabText: {
+    fontSize: 14,
+    color: '#6b7280',
     fontWeight: '500',
   },
+  webTabText: {
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  activeTabText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  webActiveTabText: {
+    color: 'white',
+    fontWeight: '700',
+  },
+  infoContainer: {
+    backgroundColor: 'white',
+    padding: 15,
+    marginTop: 10,
+    marginHorizontal: 15,
+    borderRadius: 10,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+  },
+  webInfoContainer: {
+    marginHorizontal: 20,
+    marginTop: 15,
+    padding: 20,
+    borderRadius: 15,
+    border: '1px solid #e5e7eb',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+  },
   webInfoText: {
-    fontSize: 18,
-    color: '#bdc3c7',
-    marginLeft: 15,
+    fontSize: 16,
+    color: '#374151',
+    fontWeight: '500',
   },
   wordsContainer: {
-    // Removed searchContainer styles as it's no longer used
-  },
-  webWordsContainer: {
-    // Removed webSearchContainer styles as it's no longer used
-  },
-  wordsGrid: {
+    padding: 15,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  webWordsGrid: {
-    alignItems: 'center',
+  webWordsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    gap: '15px',
+    paddingHorizontal: '20px',
+    maxWidth: '100%',
   },
   wordCard: {
     backgroundColor: 'white',
     borderRadius: 15,
-    padding: 15,
+    padding: 20,
     marginBottom: 15,
     width: '48%',
+    alignItems: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: {
@@ -196,9 +248,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
   },
   webWordCard: {
+    marginBottom: 0,
     borderRadius: 20,
-    padding: 20,
-    marginBottom: 15,
     width: 200,
     elevation: 0,
     shadowColor: undefined,
@@ -207,68 +258,66 @@ const styles = StyleSheet.create({
     shadowRadius: undefined,
   },
   wordContent: {
-    // New style for word content to center text
+    alignItems: 'center',
+    width: '100%',
   },
   wordText: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#D63031',
-    marginBottom: 5,
+    color: '#1f2937',
+    marginBottom: 8,
     textAlign: 'center',
   },
   webWordText: {
-    fontSize: 22,
-    color: '#2c3e50',
-    marginBottom: 6,
+    fontSize: 28,
+    marginBottom: 10,
   },
   wordPronunciation: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,
+    color: '#6b7280',
+    marginBottom: 6,
     textAlign: 'center',
-    marginBottom: 3,
   },
   webWordPronunciation: {
-    fontSize: 14,
+    fontSize: 18,
     color: '#34495e',
-    marginBottom: 4,
-    fontStyle: 'italic',
+    marginBottom: 8,
+    fontWeight: '500',
   },
   wordEnglish: {
-    fontSize: 12,
-    color: '#999',
+    fontSize: 14,
+    color: '#9ca3af',
+    marginBottom: 10,
     textAlign: 'center',
-    marginBottom: 8,
   },
   webWordEnglish: {
-    fontSize: 12,
+    fontSize: 16,
     color: '#2c3e50',
-    marginBottom: 8,
+    marginBottom: 12,
     fontWeight: '500',
   },
   categoryTag: {
-    backgroundColor: '#FFEAA7',
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    alignSelf: 'center',
+    backgroundColor: '#e0f2fe',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
   },
   webCategoryTag: {
-    backgroundColor: '#3498db',
-    borderRadius: 15,
-    paddingHorizontal: 12,
+    backgroundColor: '#dbeafe',
+    paddingHorizontal: 14,
     paddingVertical: 6,
+    borderRadius: 15,
   },
   categoryTagText: {
-    fontSize: 10,
-    color: '#D63031',
-    fontWeight: '500',
+    fontSize: 12,
+    color: '#0369a1',
+    fontWeight: '600',
   },
   webCategoryTagText: {
-    fontSize: 12,
-    color: 'white',
+    fontSize: 13,
+    color: '#1e40af',
+    fontWeight: '700',
   },
-  // Removed noResults styles as they are no longer applicable
-  // Removed modal styles as they are no longer applicable
 });
 
 export default WordsScreen; 

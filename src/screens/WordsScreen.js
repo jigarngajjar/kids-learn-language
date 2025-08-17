@@ -86,9 +86,7 @@ const WordsScreen = () => {
               <Text style={[styles.wordText, isWeb && styles.webWordText]}>{word.word}</Text>
               <Text style={[styles.wordPronunciation, isWeb && styles.webWordPronunciation]}>{word.pronunciation}</Text>
               <Text style={[styles.wordEnglish, isWeb && styles.webWordEnglish]}>{word.english}</Text>
-              <View style={[styles.categoryTag, isWeb && styles.webCategoryTag]}>
-                <Text style={[styles.categoryTagText, isWeb && styles.webCategoryTagText]}>{word.category}</Text>
-              </View>
+
             </View>
           </View>
         ))}

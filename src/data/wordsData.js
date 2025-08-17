@@ -38,7 +38,7 @@ export const words = [
   { word: 'આસો', pronunciation: 'aaso', english: 'Aaso', category: 'Gujarati Months' },
 
   // Animals
-  { word: 'શેર', pronunciation: 'sher', english: 'Lion', category: 'Animals' },
+  { word: 'શિહ', pronunciation: 'Shih', english: 'Lion', category: 'Animals' },
   { word: 'વાઘ', pronunciation: 'vaagh', english: 'Tiger', category: 'Animals' },
   { word: 'હાથી', pronunciation: 'haathi', english: 'Elephant', category: 'Animals' },
   { word: 'ગાય', pronunciation: 'gaay', english: 'Cow', category: 'Animals' },
@@ -84,6 +84,6 @@ export const words = [
   { word: 'લીલા મરચા', pronunciation: 'leela marcha', english: 'Green Chili', category: 'Vegetables' },
   { word: 'ગાજર', pronunciation: 'gaajar', english: 'Carrot', category: 'Vegetables' },
   { word: 'મૂળો', pronunciation: 'mulo', english: 'Radish', category: 'Vegetables' },
-  { word: 'બંધાણી', pronunciation: 'bandhaani', english: 'Cauliflower', category: 'Vegetables' },
+  { word: 'ફૂલકોબી', pronunciation: 'bandhaani', english: 'Cauliflower', category: 'Vegetables' },
   { word: 'બટાકા', pronunciation: 'bataaka', english: 'Brinjal', category: 'Vegetables' }
 ]; 

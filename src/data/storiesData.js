@@ -4,7 +4,7 @@ export const stories = [
     id: 1,
     title: 'બુદ્ધિમાન કાગડો',
     englishTitle: 'The Clever Crow',
-    content: `એક દિવસ એક કાગડો ખૂબ પ્યાસો હતો. તેને ક્યાંય પાણી ન મળ્યું. 
+    content: `એક દિવસ એક કાગડો ખૂબ તરસ્યો હતો. તેને ક્યાંય પાણી ન મળ્યું. 
     છેલ્લે તેને એક ઘડામાં થોડું પાણી જોવા મળ્યું. પણ પાણી ઘણું નીચે હતું. 
     કાગડાએ ચારેબાજુ જોયું અને જમીન પર કેટલાક કાકરા જોવા મળ્યા. 
     તે કાકરા ઘડામાં નાખવા લાગ્યો. ધીમે ધીમે પાણી ઉપર આવ્યું અને કાગડાએ પાણી પી લીધું.`,
@@ -18,12 +18,12 @@ export const stories = [
   },
   {
     id: 2,
-    title: 'સિંહ અને ચૂહો',
+    title: 'સિંહ અને ઉંદર',
     englishTitle: 'The Lion and the Mouse',
-    content: `એક દિવસ એક સિંહ જંગલમાં સૂતો હતો. એક નાનો ચૂહો તેના ઉપર દોડવા લાગ્યો. 
-    સિંહ જાગી ગયો અને ચૂહાને પકડવા લાગ્યો. ચૂહાએ કહ્યું, "મને છોડી દો, હું તમને મદદ કરીશ." 
+    content: `એક દિવસ એક સિંહ જંગલમાં સૂતો હતો. એક નાનો ઉંદર તેના ઉપર દોડવા લાગ્યો. 
+    સિંહ જાગી ગયો અને ઉંદરને પકડવા લાગ્યો. ઉંદરે કહ્યું, "મને છોડી દો, હું તમને મદદ કરીશ." 
     સિંહે હસીને તેને છોડી દીધો. કેટલાક દિવસ પછી સિંહ જાળમાં ફસાઈ ગયો. 
-    ચૂહાએ જાળ કાપીને સિંહને બચાવ્યો.`,
+    ઉંદરે જાળ કાપીને સિંહને બચાવ્યો.`,
     englishContent: `One day a lion was sleeping in the forest. A small mouse started running over him. 
     The lion woke up and tried to catch the mouse. The mouse said, "Let me go, I will help you." 
     The lion laughed and let him go. After some days, the lion got caught in a net. 

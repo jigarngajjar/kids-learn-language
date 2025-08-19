@@ -38,7 +38,7 @@ export const words = [
   { word: 'આસો', pronunciation: 'aaso', english: 'Aaso', category: 'Gujarati Months' },
 
   // Animals
-  { word: 'શિહ', pronunciation: 'Shih', english: 'Lion', category: 'Animals' },
+  { word: 'સિંહ', pronunciation: 'Shih', english: 'Lion', category: 'Animals' },
   { word: 'વાઘ', pronunciation: 'vaagh', english: 'Tiger', category: 'Animals' },
   { word: 'હાથી', pronunciation: 'haathi', english: 'Elephant', category: 'Animals' },
   { word: 'ગાય', pronunciation: 'gaay', english: 'Cow', category: 'Animals' },

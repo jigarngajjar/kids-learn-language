@@ -15,6 +15,7 @@ import WordsScreen from './src/screens/WordsScreen';
 import StoriesScreen from './src/screens/StoriesScreen';
 import VowelsScreen from './src/screens/VowelsScreen';
 import ConsonantsScreen from './src/screens/ConsonantsScreen';
+import GamesScreen from './src/screens/GamesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -64,6 +65,8 @@ export default function App() {
               iconName = focused ? 'book' : 'book-outline';
             } else if (route.name === 'Stories') {
               iconName = focused ? 'library' : 'library-outline';
+            } else if (route.name === 'Games') {
+              iconName = focused ? 'game-controller' : 'game-controller-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -113,6 +116,11 @@ export default function App() {
           name="Stories" 
           component={StoriesScreen}
           options={{ title: 'બાળવાર્તા (Stories)' }}
+        />
+        <Tab.Screen 
+          name="Games" 
+          component={GamesScreen}
+          options={{ title: 'ગેમ્સ (Games)' }}
         />
       </Tab.Navigator>
     </NavigationContainer>
